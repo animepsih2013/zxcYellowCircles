@@ -1,6 +1,6 @@
 import sys
 import random
-from PyQt6 import uic
+from UI import Ui_circles
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from PyQt6.QtGui import QPainter, QColor
 
@@ -8,11 +8,12 @@ from PyQt6.QtGui import QPainter, QColor
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        uic.loadUi('UI.ui', self)
+        self.ui = Ui_circles()
+        self.ui.setupUi(self)
 
         self.circles = []
 
-        self.pushButton.clicked.connect(self.add_circle)
+        self.ui.pushButton.clicked.connect(self.add_circle)
 
     def add_circle(self):
         diameter = random.randint(20, 100)
@@ -26,8 +27,12 @@ class MainWindow(QMainWindow):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
+
         for (x, y, diameter) in self.circles:
-            painter.setBrush(QColor('#FFFF00'))
+            r = random.randint(0, 256)
+            g = random.randint(0, 256)
+            b = random.randint(0, 256)
+            painter.setBrush(QColor(r, g, b))
             painter.drawEllipse(x, y, diameter, diameter)
 
 
